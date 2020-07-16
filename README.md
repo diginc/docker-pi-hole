@@ -7,6 +7,15 @@
 
 ## Quick Start
 
+Below are the instructions for getting started quickly with several methods.
+
+### Single container service
+Run the below command to have the service start with default settings.
+
+`[ -z ${Pihole_branch+x} ] && Pihole_branch='master' ; curl -s https://raw.githubusercontent.com/pi-hole/docker-pi-hole/${Pihole_branch}/docker_run.sh | sudo bash`
+
+### Docker compose
+
 [Docker-compose](https://docs.docker.com/compose/install/) example:
 
 ```yaml
@@ -39,8 +48,6 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 ```
-
-[Here is an equivalent docker run script](https://github.com/pi-hole/docker-pi-hole/blob/master/docker_run.sh).
 
 ## Upgrade Notices:
 
