@@ -108,7 +108,18 @@ if [ -n "${PIHOLE_DNS_}" ]; then
     PIHOLE_DNS_ARR=(${PIHOLE_DNS_//;/ })
     count=1
     for i in "${PIHOLE_DNS_ARR[@]}"; do
-        change_setting "PIHOLE_DNS_$count" "$i"
+        # Split upstream address by #
+        split=(${i//#/ })
+
+        # Resolve hostname if any, otherwise use ip
+        resolved="$(ping -q -c 1 -t 1 "$split" | grep PING | sed -e "s/).*//" | sed -e "s/.*(//")"
+
+        # Reappend optional port
+        for part in "${split[@]:1}"; do
+            resolved+="#$part"
+        done
+
+        change_setting "PIHOLE_DNS_$count" "$resolved"
         ((count=count+1))
     done
 else
